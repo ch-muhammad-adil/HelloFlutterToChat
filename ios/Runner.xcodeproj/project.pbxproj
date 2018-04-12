@@ -20,6 +20,7 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		99BD9F643AC5934ED62472DA /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085556DDF16028B85C8B38BE /* libPods-Runner.a */; };
 		C58AB12C207F6A2100CBEAED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C58AB12B207F6A2100CBEAED /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		085556DDF16028B85C8B38BE /* libPods-Runner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Runner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		2D5378251FAA1A9400D5DBA9 /* flutter_assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = flutter_assets; path = Flutter/flutter_assets; sourceTree = SOURCE_ROOT; };
@@ -65,12 +67,20 @@
 			files = (
 				9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */,
 				3B80C3941E831B6300D905FE /* App.framework in Frameworks */,
+				99BD9F643AC5934ED62472DA /* libPods-Runner.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		53D7C4BB99CAEA1B4587FAAC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		9740EEB11CF90186004384FC /* Flutter */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +101,8 @@
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
+				53D7C4BB99CAEA1B4587FAAC /* Pods */,
+				C6F64114DDC59ACBD67EAFD6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,6 +138,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		C6F64114DDC59ACBD67EAFD6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				085556DDF16028B85C8B38BE /* libPods-Runner.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -133,12 +153,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 97C147051CF9000F007C117D /* Build configuration list for PBXNativeTarget "Runner" */;
 			buildPhases = (
+				076A90378FFD7093940BE49D /* [CP] Check Pods Manifest.lock */,
 				9740EEB61CF901F6004384FC /* Run Script */,
 				97C146EA1CF9000F007C117D /* Sources */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
+				B9D39F8BA11ABDB5C36A09A8 /* [CP] Embed Pods Frameworks */,
+				66F033EEC7E230CD86721733 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -201,6 +224,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		076A90378FFD7093940BE49D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Runner-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3B06AD1E1E4923F5004D2608 /* Thin Binary */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -215,6 +256,67 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" thin";
 		};
+		66F033EEC7E230CD86721733 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-resources.sh",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIAuthPickerViewController.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIAuthTableViewCell.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIEmailEntryViewController.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIPasswordRecoveryViewController.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIPasswordSignInViewController.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIPasswordSignUpViewController.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/FUIPasswordVerificationViewController.nib",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_email.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_email@2x.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_email@3x.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_visibility.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_visibility@2x.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_visibility@3x.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_visibility_off.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_visibility_off@2x.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/ic_visibility_off@3x.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseAuthUI/Frameworks/FirebaseAuthUI.framework/en.lproj",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/ic_google.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/ic_google@2x.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/ic_google@3x.png",
+				"${PODS_ROOT}/FirebaseUI/FirebaseUIFrameworks/FirebaseGoogleAuthUI/Frameworks/FirebaseGoogleAuthUI.framework/en.lproj",
+				"${PODS_ROOT}/GTMOAuth2/Source/Touch/GTMOAuth2ViewTouch.xib",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FUIAuthPickerViewController.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FUIAuthTableViewCell.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FUIEmailEntryViewController.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FUIPasswordRecoveryViewController.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FUIPasswordSignInViewController.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FUIPasswordSignUpViewController.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FUIPasswordVerificationViewController.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_email.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_email@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_email@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_visibility.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_visibility@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_visibility@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_visibility_off.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_visibility_off@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_visibility_off@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/en.lproj",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_google.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_google@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_google@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GTMOAuth2ViewTouch.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9740EEB61CF901F6004384FC /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -228,6 +330,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build";
+		};
+		B9D39F8BA11ABDB5C36A09A8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
+				"${PODS_ROOT}/.symlinks/flutter/ios/Flutter.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Flutter.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
