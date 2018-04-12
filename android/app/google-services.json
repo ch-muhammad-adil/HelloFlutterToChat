@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1042410995941",
+    "firebase_url": "https://hello-flutter-to-chat.firebaseio.com",
+    "project_id": "hello-flutter-to-chat",
+    "storage_bucket": "hello-flutter-to-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1042410995941:android:37f96ceb6d94985a",
+        "android_client_info": {
+          "package_name": "com.suavistech.helloflutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1042410995941-qh4iabd865aprvevplrs4qvjiieomob8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZ5RkIUHg9nEMKxT9kBblUipSvQPgazr8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
