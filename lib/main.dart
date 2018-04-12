@@ -19,13 +19,13 @@ class MyApp extends StatelessWidget {
 }
 
 final ThemeData kIOSTheme = new ThemeData(
-  primarySwatch: Colors.orange,
+  primarySwatch: Colors.red,
   primaryColor: Colors.grey[100],
   primaryColorBrightness: Brightness.light,
 );
 
 final ThemeData kDefaultTheme = new ThemeData(
-  primarySwatch: Colors.purple,
+  primarySwatch: Colors.red,
   accentColor: Colors.orangeAccent[400],
 );
 
