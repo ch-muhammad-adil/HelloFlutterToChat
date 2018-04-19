@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:async';
 import 'ChatMessage.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  final _googleSignIn = new GoogleSignIn(scopes: ['email']);
   final String userName = "Adil";
   final TextEditingController _textController = new TextEditingController();
   static final List<ChatMessage> _messages = <ChatMessage>[];
@@ -58,21 +61,25 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             )));
   }
 
-  void _handleSubmitted(String text) {
+  Future _handleSubmitted(String text) async {
     _textController.clear();
     if (text.isEmpty) {
       return;
     }
     setState(() {
-      //new
-      _isComposing = false; //new
+      _isComposing = false;
     });
+    await _ensureLoggedIn();
+    _sendMessage(text: text);
+  }
+
+  void _sendMessage({ String text }) {
     ChatMessage message = new ChatMessage(
       message: text,
       name: userName,
       context: context,
       animationController: new AnimationController(
-          vsync: this, duration: new Duration(milliseconds: 300)),
+          vsync: this, duration: new Duration(milliseconds: 500)),
     );
     setState(() {
       _messages.insert(0, message);
@@ -80,6 +87,19 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     message.animationController.forward();
   }
 
+
+  Future<Null> _ensureLoggedIn() async {
+    GoogleSignInAccount user = _googleSignIn.currentUser;
+    if (user == null)
+      user = await _googleSignIn.signInSilently();
+    if (user == null) {
+      try {
+        await _googleSignIn.signIn();
+      } catch (error) {
+        print(error);
+      }
+    }
+  }
   @override
   void dispose() {
     for (ChatMessage message in _messages)
