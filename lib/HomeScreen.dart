@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'models/Message.dart';
 import 'dart:async';
 import 'ChatMessage.dart';
 
@@ -75,8 +76,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   void _sendMessage({ String text }) {
     ChatMessage message = new ChatMessage(
-      message: text,
-      name: userName,
+      message: new Message(text, _googleSignIn.currentUser.displayName, _googleSignIn.currentUser.photoUrl),
       context: context,
       animationController: new AnimationController(
           vsync: this, duration: new Duration(milliseconds: 500)),

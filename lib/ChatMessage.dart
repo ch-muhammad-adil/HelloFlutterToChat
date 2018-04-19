@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'models/Message.dart';
 
 class ChatMessage extends StatelessWidget {
-  final String message;
-  final String name;
+  final Message message;
   final BuildContext context;
   final AnimationController animationController;
   ChatMessage(
-      {this.message, this.name, this.context, this.animationController});
+      {this.message, this.context, this.animationController});
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +25,16 @@ class ChatMessage extends StatelessWidget {
             children: <Widget>[
               new Container(
                 margin: const EdgeInsets.only(right: 16.0),
-                child: new CircleAvatar(child: new Text(name[0])),
+                child: new CircleAvatar(child: new Text(message.userName[0])),
               ),
               new Expanded(
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    new Text(name, style: Theme.of(context).textTheme.subhead),
+                    new Text(message.userName, style: Theme.of(context).textTheme.subhead),
                     new Container(
                       margin: const EdgeInsets.only(top: 5.0),
-                      child: new Text(message),
+                      child: new Text(message.message),
                     ),
                   ],
                 ),
