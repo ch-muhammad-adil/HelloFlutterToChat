@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'models/Message.dart';
 import 'dart:async';
 import 'ChatMessage.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,10 +17,12 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final _googleSignIn = new GoogleSignIn(scopes: ['email']);
-  final String userName = "Adil";
+  final _firebaseAuth = FirebaseAuth.instance;
   final TextEditingController _textController = new TextEditingController();
   static final List<ChatMessage> _messages = <ChatMessage>[];
+  final reference = FirebaseDatabase.instance.reference().child('messages');
   bool _isComposing = false;
+
   Widget _buildTextComposer() {
     return new IconTheme(
         data: new IconThemeData(color: Theme.of(context).accentColor),
@@ -75,16 +79,18 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   void _sendMessage({ String text }) {
-    ChatMessage message = new ChatMessage(
-      message: new Message(text, _googleSignIn.currentUser.displayName, _googleSignIn.currentUser.photoUrl),
+    Message message = new Message(_firebaseUser.uid,text, _googleSignIn.currentUser.displayName, _googleSignIn.currentUser.photoUrl,new DateTime.now());
+    ChatMessage chatMessage= new ChatMessage(
+      message: message,
       context: context,
       animationController: new AnimationController(
           vsync: this, duration: new Duration(milliseconds: 500)),
     );
+    reference.push().set(message.toJson());
     setState(() {
-      _messages.insert(0, message);
+      _messages.insert(0, chatMessage);
     });
-    message.animationController.forward();
+    chatMessage.animationController.forward();
   }
 
 
@@ -99,6 +105,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         print(error);
       }
     }
+    if (await _firebaseAuth.currentUser() == null) {
+      GoogleSignInAuthentication credentials =
+      await _googleSignIn.currentUser.authentication;
+      _firebaseUser = await _firebaseAuth.signInWithGoogle(
+        idToken: credentials.idToken,
+        accessToken: credentials.accessToken,
+      );
+    }
   }
   @override
   void dispose() {
@@ -107,8 +121,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  FirebaseUser _firebaseUser;
   @override
   Widget build(BuildContext context) {
+    _firebaseAuth.currentUser().then((user){
+      _firebaseUser = user;
+      return user;
+    });
+
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Chat App"),

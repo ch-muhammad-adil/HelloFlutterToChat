@@ -25,7 +25,7 @@ class ChatMessage extends StatelessWidget {
             children: <Widget>[
               new Container(
                 margin: const EdgeInsets.only(right: 16.0),
-                child: new CircleAvatar(child: new Text(message.userName[0])),
+                child: new CircleAvatar(backgroundImage: new NetworkImage(message.userProfileUrl)),
               ),
               new Expanded(
                 child: new Column(
