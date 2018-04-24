@@ -75,12 +75,17 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       _isComposing = false;
     });
     await _ensureLoggedIn();
-    _sendMessage(text: text);
+    Message message = new Message(
+        _firebaseUser.uid,
+        text,
+        _googleSignIn.currentUser.displayName,
+        _googleSignIn.currentUser.photoUrl,
+        new DateTime.now());
+    _sendMessage(message: message);
   }
 
-  void _sendMessage({ String text }) {
-    Message message = new Message(_firebaseUser.uid,text, _googleSignIn.currentUser.displayName, _googleSignIn.currentUser.photoUrl,new DateTime.now());
-    ChatMessage chatMessage= new ChatMessage(
+  void _sendMessage({Message message}) {
+    ChatMessage chatMessage = new ChatMessage(
       message: message,
       context: context,
       animationController: new AnimationController(
@@ -93,11 +98,9 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     chatMessage.animationController.forward();
   }
 
-
   Future<Null> _ensureLoggedIn() async {
     GoogleSignInAccount user = _googleSignIn.currentUser;
-    if (user == null)
-      user = await _googleSignIn.signInSilently();
+    if (user == null) user = await _googleSignIn.signInSilently();
     if (user == null) {
       try {
         await _googleSignIn.signIn();
@@ -107,13 +110,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
     if (await _firebaseAuth.currentUser() == null) {
       GoogleSignInAuthentication credentials =
-      await _googleSignIn.currentUser.authentication;
+          await _googleSignIn.currentUser.authentication;
       _firebaseUser = await _firebaseAuth.signInWithGoogle(
         idToken: credentials.idToken,
         accessToken: credentials.accessToken,
       );
     }
   }
+
   @override
   void dispose() {
     for (ChatMessage message in _messages)
@@ -122,12 +126,63 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   FirebaseUser _firebaseUser;
+  bool _load = true;
   @override
-  Widget build(BuildContext context) {
-    _firebaseAuth.currentUser().then((user){
+  void initState() {
+    _firebaseAuth.currentUser().then((user) {
       _firebaseUser = user;
       return user;
     });
+
+
+
+    // fetching list of data..
+
+    reference.orderByChild("date").once().then((snapshot) {
+      Map data = snapshot.value;
+      data.forEach((key, snap) {
+        ChatMessage chatMessage = new ChatMessage(
+        message: new Message.fromMap(snap,key),
+        context: context,
+        animationController: new AnimationController(
+            vsync: this, duration: new Duration(milliseconds: 200)),
+      );
+      setState(() {
+        _messages.insert(0, chatMessage);
+      });
+      chatMessage.animationController.forward();
+      });
+      setState(() {
+        _load = false;
+      });
+    },onError: (){
+      print("error");
+      setState(() {
+        _load = false;
+      });
+    }).catchError((error){
+      print(error);
+      setState(() {
+        _load = false;
+      });
+    });
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+
+
+
+    Widget loadingIndicator = _load
+        ? new Container(
+            color: Colors.grey[300],
+            width: 70.0,
+            height: 70.0,
+            child: new Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: new Center(child: new CircularProgressIndicator())),
+          )
+        : new Container();
 
     return new Scaffold(
       appBar: new AppBar(
@@ -137,6 +192,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       body: new Container(
         child: new Column(
           children: <Widget>[
+            loadingIndicator,
             new Flexible(
                 child: new ListView.builder(
               itemBuilder: (_, int index) => _messages[index],
@@ -153,8 +209,11 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             )
           ],
         ),
-        decoration: Theme.of(context).platform == TargetPlatform.iOS ?
-          new BoxDecoration(border: new Border(top: new BorderSide(color: Colors.grey[200]))):null,
+        decoration: Theme.of(context).platform == TargetPlatform.iOS
+            ? new BoxDecoration(
+                border:
+                    new Border(top: new BorderSide(color: Colors.grey[200])))
+            : null,
       ),
     );
   }

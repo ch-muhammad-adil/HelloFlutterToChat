@@ -8,17 +8,15 @@ class ChatMessage extends StatelessWidget {
   ChatMessage(
       {this.message, this.context, this.animationController});
 
+
   @override
   Widget build(BuildContext context) {
     return new SizeTransition(
-        //new
         sizeFactor: new CurvedAnimation(
-            //new
             parent: animationController,
-            curve: Curves.easeOut), //new
-        axisAlignment: 0.0, //new
+            curve: Curves.easeOut),
+        axisAlignment: 0.0,
         child: new Container(
-          //modified
           margin: const EdgeInsets.symmetric(vertical: 10.0),
           child: new Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,6 +33,10 @@ class ChatMessage extends StatelessWidget {
                     new Container(
                       margin: const EdgeInsets.only(top: 5.0),
                       child: new Text(message.message),
+                    ),
+                    new Container(
+                      margin: const EdgeInsets.only(top: 5.0),
+                      child: new Text(message.dateTime.toString()),
                     ),
                   ],
                 ),

@@ -1,5 +1,6 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'dart:collection';
 
+import 'package:firebase_database/firebase_database.dart';
 
 class Message {
   final String message;
@@ -18,6 +19,13 @@ class Message {
         userProfileUrl = snapshot.value["userProfileUrl"],
         userKey = snapshot.value["userKey"],
         message = snapshot.value["message"];
+  Message.fromMap(Map map, String key) :
+        key = key,
+        dateTime = new DateTime.fromMillisecondsSinceEpoch(map["date"]),
+        userName = map["userName"],
+        userProfileUrl = map["userProfileUrl"],
+        userKey = map["userKey"],
+        message = map["message"];
 
    toJson() {
     return {
