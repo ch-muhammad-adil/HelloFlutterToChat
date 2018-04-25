@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'HomeScreen.dart';
+import 'package:hello_flutter/screens/chat_screen/ChatScreen.dart';
 
 void main() => runApp(new MyApp());
 
@@ -9,9 +9,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Hello Flutter',
-      theme: defaultTargetPlatform == TargetPlatform.iOS         //new
-          ? kIOSTheme                                              //new
+      title: 'Group Chat',
+      theme: defaultTargetPlatform == TargetPlatform.iOS
+          ? kIOSTheme
           : kDefaultTheme,
       home: new HomeScreen(),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'models/Message.dart';
+import 'package:hello_flutter/models/Message.dart';
+
 
 class ChatMessage extends StatelessWidget {
   final Message message;
@@ -31,7 +32,7 @@ class ChatMessage extends StatelessWidget {
                         style: Theme.of(context).textTheme.subhead),
                     new Container(
                       margin: const EdgeInsets.only(top: 5.0),
-                      child: message.mediaFileUrl != null
+                      child: (message.mediaFileUrl != null && !message.mediaFileUrl.isEmpty)
                           ? new Image.network(
                               message.mediaFileUrl,
                               width: 250.0,

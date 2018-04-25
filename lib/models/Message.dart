@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:firebase_database/firebase_database.dart';
 
 class Message {
@@ -11,7 +9,7 @@ class Message {
   final DateTime dateTime;
   final String mediaFileUrl;
 
-  Message(this.userKey,this.message, this.userName, this.userProfileUrl,this.dateTime,this.mediaFileUrl);
+  Message(this.userKey,this.message, this.userName, this.userProfileUrl,this.dateTime,this.mediaFileUrl,[this.key = ""]);
 
   Message.fromSnapshot(DataSnapshot snapshot) :
         key = snapshot.key,
@@ -19,7 +17,8 @@ class Message {
         userName = snapshot.value["userName"],
         userProfileUrl = snapshot.value["userProfileUrl"],
         userKey = snapshot.value["userKey"],
-        message = snapshot.value["message"];
+        message = snapshot.value["message"],
+        mediaFileUrl = snapshot.value["mediaFileUrl"];
 
 
   Message.fromMap(Map map, String key) :

@@ -3,9 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'models/Message.dart';
+import 'package:hello_flutter/models/Message.dart';
+
 import 'dart:async';
-import 'ChatMessage.dart';
+import 'package:hello_flutter/screens/chat_screen/ChatMessage.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -174,6 +175,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         messagesList.add(new Message.fromMap(snap, key));
       });
       messagesList
+          // ignore: strong_mode_uses_dynamic_as_bottom
           .sort((Message a, Message b) => a.dateTime.compareTo(b.dateTime));
       for (final message in messagesList) {
         ChatMessage chatMessage = new ChatMessage(
