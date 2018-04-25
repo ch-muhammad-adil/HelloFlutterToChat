@@ -7,6 +7,10 @@ import 'models/Message.dart';
 import 'dart:async';
 import 'ChatMessage.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:math';
+import 'dart:io';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -30,6 +34,31 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             margin: const EdgeInsets.all(3.0),
             child: new Row(
               children: <Widget>[
+                new Container(
+                  margin: new EdgeInsets.symmetric(horizontal: 4.0),
+                  child: new IconButton(
+                      icon: new Icon(Icons.photo_camera),
+                      onPressed: () async {
+                        await _ensureLoggedIn();
+                        File imageFile = await ImagePicker.pickImage(
+                            source: ImageSource.gallery);
+
+                        int random = new Random().nextInt(100000);                         //new
+                        StorageReference ref =                                             //new
+                        FirebaseStorage.instance.ref().child("chat-images/image_$random.jpg");         //new
+                        StorageUploadTask uploadTask = ref.put(imageFile);                 //new
+                        Uri downloadUrl = (await uploadTask.future).downloadUrl;
+
+                        Message message = new Message(
+                            _firebaseUser.uid,
+                            "",
+                            _googleSignIn.currentUser.displayName,
+                            _googleSignIn.currentUser.photoUrl,
+                            new DateTime.now(),downloadUrl.toString());
+                        _sendMessage(message: message);
+
+                      }),
+                ),
                 new Flexible(
                   child: new TextField(
                     controller: _textController,
@@ -80,7 +109,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         text,
         _googleSignIn.currentUser.displayName,
         _googleSignIn.currentUser.photoUrl,
-        new DateTime.now());
+        new DateTime.now(),"");
     _sendMessage(message: message);
   }
 
@@ -129,12 +158,12 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool _load = true;
   @override
   void initState() {
+    super.initState();
+
     _firebaseAuth.currentUser().then((user) {
       _firebaseUser = user;
       return user;
     });
-
-
 
     // fetching list of data..
 
@@ -144,7 +173,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       data.forEach((key, snap) {
         messagesList.add(new Message.fromMap(snap, key));
       });
-      messagesList.sort((Message a, Message b) => a.dateTime.compareTo(b.dateTime) );
+      messagesList
+          .sort((Message a, Message b) => a.dateTime.compareTo(b.dateTime));
       for (final message in messagesList) {
         ChatMessage chatMessage = new ChatMessage(
           message: message,
@@ -160,35 +190,27 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       setState(() {
         _load = false;
       });
-    },onError: (){
+    }, onError: () {
       print("error");
       setState(() {
         _load = false;
       });
-    }).catchError((error){
+    }).catchError((error) {
       print(error);
       setState(() {
         _load = false;
       });
     });
-
-
-
-
-    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
-
-
     Widget loadingIndicator = _load
         ? new Container(
             color: Colors.grey[300],
-            width: 70.0,
-            height: 70.0,
+            alignment: Alignment.center,
             child: new Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.all(0.0),
                 child: new Center(child: new CircularProgressIndicator())),
           )
         : new Container();
@@ -198,31 +220,36 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         title: new Text("Chat App"),
         elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
       ),
-      body: new Container(
-        child: new Column(
-          children: <Widget>[
-            loadingIndicator,
-            new Flexible(
-                child: new ListView.builder(
-              itemBuilder: (_, int index) => _messages[index],
-              reverse: true,
-              padding: const EdgeInsets.all(5.0),
-              itemCount: _messages.length,
-            )),
-            new Divider(
-              height: 1.0,
+      body: new Stack(
+        children: <Widget>[
+          new Container(
+            child: new Column(
+              children: <Widget>[
+                new Flexible(
+                    child: new ListView.builder(
+                  itemBuilder: (_, int index) => _messages[index],
+                  reverse: true,
+                  padding: const EdgeInsets.all(5.0),
+                  itemCount: _messages.length,
+                )),
+                new Divider(
+                  height: 1.0,
+                ),
+                new Container(
+                  decoration:
+                      new BoxDecoration(color: Theme.of(context).cardColor),
+                  child: _buildTextComposer(),
+                )
+              ],
             ),
-            new Container(
-              decoration: new BoxDecoration(color: Theme.of(context).cardColor),
-              child: _buildTextComposer(),
-            )
-          ],
-        ),
-        decoration: Theme.of(context).platform == TargetPlatform.iOS
-            ? new BoxDecoration(
-                border:
-                    new Border(top: new BorderSide(color: Colors.grey[200])))
-            : null,
+            decoration: Theme.of(context).platform == TargetPlatform.iOS
+                ? new BoxDecoration(
+                    border: new Border(
+                        top: new BorderSide(color: Colors.grey[200])))
+                : null,
+          ),
+          loadingIndicator
+        ],
       ),
     );
   }

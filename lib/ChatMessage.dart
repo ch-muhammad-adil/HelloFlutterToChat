@@ -5,16 +5,13 @@ class ChatMessage extends StatelessWidget {
   final Message message;
   final BuildContext context;
   final AnimationController animationController;
-  ChatMessage(
-      {this.message, this.context, this.animationController});
-
+  ChatMessage({this.message, this.context, this.animationController});
 
   @override
   Widget build(BuildContext context) {
     return new SizeTransition(
         sizeFactor: new CurvedAnimation(
-            parent: animationController,
-            curve: Curves.easeOut),
+            parent: animationController, curve: Curves.easeOut),
         axisAlignment: 0.0,
         child: new Container(
           margin: const EdgeInsets.symmetric(vertical: 10.0),
@@ -23,16 +20,23 @@ class ChatMessage extends StatelessWidget {
             children: <Widget>[
               new Container(
                 margin: const EdgeInsets.only(right: 16.0),
-                child: new CircleAvatar(backgroundImage: new NetworkImage(message.userProfileUrl)),
+                child: new CircleAvatar(
+                    backgroundImage: new NetworkImage(message.userProfileUrl)),
               ),
               new Expanded(
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    new Text(message.userName, style: Theme.of(context).textTheme.subhead),
+                    new Text(message.userName,
+                        style: Theme.of(context).textTheme.subhead),
                     new Container(
                       margin: const EdgeInsets.only(top: 5.0),
-                      child: new Text(message.message),
+                      child: message.mediaFileUrl != null
+                          ? new Image.network(
+                              message.mediaFileUrl,
+                              width: 250.0,
+                            )
+                          : new Text(message.message),
                     ),
                     new Container(
                       margin: const EdgeInsets.only(top: 5.0),

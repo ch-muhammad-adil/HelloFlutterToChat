@@ -9,8 +9,9 @@ class Message {
   final String key;
   final String userKey;
   final DateTime dateTime;
+  final String mediaFileUrl;
 
-  Message(this.userKey,this.message, this.userName, this.userProfileUrl,this.dateTime);
+  Message(this.userKey,this.message, this.userName, this.userProfileUrl,this.dateTime,this.mediaFileUrl);
 
   Message.fromSnapshot(DataSnapshot snapshot) :
         key = snapshot.key,
@@ -27,7 +28,8 @@ class Message {
         userName = map["userName"],
         userProfileUrl = map["userProfileUrl"],
         userKey = map["userKey"],
-        message = map["message"];
+        message = map["message"],
+        mediaFileUrl = map["mediaFileUrl"];
 
    toJson() {
     return {
@@ -35,7 +37,9 @@ class Message {
       "message": message,
       "userName": userName,
       "userProfileUrl": userProfileUrl,
-      "date":dateTime.millisecondsSinceEpoch
+      "date":dateTime.millisecondsSinceEpoch,
+      "mediaFileUrl":mediaFileUrl
+
     };
   }
 

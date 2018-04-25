@@ -12,7 +12,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  image_picker: 0.1.1                                             # new
+  image_picker: 0.4.1                                             # new
   google_sign_in: "^3.0.1"
   firebase_analytics: "^0.3.1"                                       # new
   firebase_auth: "^0.5.4"
