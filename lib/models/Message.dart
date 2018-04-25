@@ -19,6 +19,8 @@ class Message {
         userProfileUrl = snapshot.value["userProfileUrl"],
         userKey = snapshot.value["userKey"],
         message = snapshot.value["message"];
+
+
   Message.fromMap(Map map, String key) :
         key = key,
         dateTime = new DateTime.fromMillisecondsSinceEpoch(map["date"]),

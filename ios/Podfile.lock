@@ -87,7 +87,7 @@ DEPENDENCIES:
   - firebase_analytics (from `Pods/.symlinks/plugins/firebase_analytics-0.3.1/ios`)
   - firebase_auth (from `Pods/.symlinks/plugins/firebase_auth-0.5.4/ios`)
   - firebase_core (from `Pods/.symlinks/plugins/firebase_core-0.2.2/ios`)
-  - firebase_database (from `Pods/.symlinks/plugins/firebase_database-0.4.4/ios`)
+  - firebase_database (from `Pods/.symlinks/plugins/firebase_database-0.4.6/ios`)
   - firebase_storage (from `Pods/.symlinks/plugins/firebase_storage-0.2.2/ios`)
   - Flutter (from `Pods/.symlinks/flutter/ios`)
   - google_sign_in (from `Pods/.symlinks/plugins/google_sign_in-3.0.1/ios`)
@@ -101,7 +101,7 @@ EXTERNAL SOURCES:
   firebase_core:
     :path: Pods/.symlinks/plugins/firebase_core-0.2.2/ios
   firebase_database:
-    :path: Pods/.symlinks/plugins/firebase_database-0.4.4/ios
+    :path: Pods/.symlinks/plugins/firebase_database-0.4.6/ios
   firebase_storage:
     :path: Pods/.symlinks/plugins/firebase_storage-0.2.2/ios
   Flutter:

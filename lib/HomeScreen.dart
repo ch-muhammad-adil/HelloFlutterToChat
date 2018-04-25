@@ -140,18 +140,23 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     reference.orderByChild("date").once().then((snapshot) {
       Map data = snapshot.value;
+      final messagesList = [];
       data.forEach((key, snap) {
+        messagesList.add(new Message.fromMap(snap, key));
+      });
+      messagesList.sort((Message a, Message b) => a.dateTime.compareTo(b.dateTime) );
+      for (final message in messagesList) {
         ChatMessage chatMessage = new ChatMessage(
-        message: new Message.fromMap(snap,key),
-        context: context,
-        animationController: new AnimationController(
-            vsync: this, duration: new Duration(milliseconds: 200)),
-      );
-      setState(() {
-        _messages.insert(0, chatMessage);
-      });
-      chatMessage.animationController.forward();
-      });
+          message: message,
+          context: context,
+          animationController: new AnimationController(
+              vsync: this, duration: new Duration(milliseconds: 200)),
+        );
+        setState(() {
+          _messages.insert(0, chatMessage);
+        });
+        chatMessage.animationController.forward();
+      }
       setState(() {
         _load = false;
       });
@@ -166,6 +171,10 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         _load = false;
       });
     });
+
+
+
+
     super.initState();
   }
   @override
