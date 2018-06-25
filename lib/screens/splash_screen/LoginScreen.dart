@@ -19,7 +19,7 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     firebaseAuth.onAuthStateChanged.firstWhere((user) => user!=null).then((user) {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         new MaterialPageRoute(builder: (context) => new ChatScreen()),
       );
@@ -37,10 +37,6 @@ class LoginScreenState extends State<LoginScreen> {
             new Future.delayed(new Duration(seconds: 1))
                 .then((user) => ensureLoggedIn().then((user){
                   print(user);
-                  Navigator.push(
-                    context,
-                    new MaterialPageRoute(builder: (context) => new ChatScreen()),
-                  );
             }));
           },
         ),
