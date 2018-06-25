@@ -9,20 +9,20 @@ import 'dart:async';
 import 'package:hello_flutter/screens/chat_screen/ChatMessage.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:hello_flutter/utils/AuthenticationUtils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:math';
 import 'dart:io';
 
-class HomeScreen extends StatefulWidget {
+class ChatScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new HomeScreenState();
+    return new ChatScreenState();
   }
 }
 
-class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  final _googleSignIn = new GoogleSignIn(scopes: ['email']);
-  final _firebaseAuth = FirebaseAuth.instance;
+class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
+
   final TextEditingController _textController = new TextEditingController();
   static final List<ChatMessage> _messages = <ChatMessage>[];
   final reference = FirebaseDatabase.instance.reference().child('messages');
@@ -40,7 +40,6 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   child: new IconButton(
                       icon: new Icon(Icons.photo_camera),
                       onPressed: () async {
-                        await _ensureLoggedIn();
                         File imageFile = await ImagePicker.pickImage(
                             source: ImageSource.gallery);
 
@@ -51,10 +50,10 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         Uri downloadUrl = (await uploadTask.future).downloadUrl;
 
                         Message message = new Message(
-                            _firebaseUser.uid,
+                            firebaseUser.uid,
                             "",
-                            _googleSignIn.currentUser.displayName,
-                            _googleSignIn.currentUser.photoUrl,
+                            googleSignIn.currentUser.displayName,
+                            googleSignIn.currentUser.photoUrl,
                             new DateTime.now(),downloadUrl.toString());
                         _sendMessage(message: message);
 
@@ -104,12 +103,11 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     setState(() {
       _isComposing = false;
     });
-    await _ensureLoggedIn();
     Message message = new Message(
-        _firebaseUser.uid,
+        firebaseUser.uid,
         text,
-        _googleSignIn.currentUser.displayName,
-        _googleSignIn.currentUser.photoUrl,
+        googleSignIn.currentUser.displayName,
+        googleSignIn.currentUser.photoUrl,
         new DateTime.now(),"");
     _sendMessage(message: message);
   }
@@ -128,25 +126,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     chatMessage.animationController.forward();
   }
 
-  Future<Null> _ensureLoggedIn() async {
-    GoogleSignInAccount user = _googleSignIn.currentUser;
-    if (user == null) user = await _googleSignIn.signInSilently();
-    if (user == null) {
-      try {
-        await _googleSignIn.signIn();
-      } catch (error) {
-        print(error);
-      }
-    }
-    if (await _firebaseAuth.currentUser() == null) {
-      GoogleSignInAuthentication credentials =
-          await _googleSignIn.currentUser.authentication;
-      _firebaseUser = await _firebaseAuth.signInWithGoogle(
-        idToken: credentials.idToken,
-        accessToken: credentials.accessToken,
-      );
-    }
-  }
+
 
   @override
   void dispose() {
@@ -155,14 +135,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  FirebaseUser _firebaseUser;
+
   bool _load = true;
   @override
   void initState() {
     super.initState();
 
-    _firebaseAuth.currentUser().then((user) {
-      _firebaseUser = user;
+    firebaseAuth.currentUser().then((user) {
+      firebaseUser = user;
       return user;
     });
 
