@@ -154,9 +154,9 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       data.forEach((key, snap) {
         messagesList.add(new Message.fromMap(snap, key));
       });
-      messagesList
-          // ignore: strong_mode_uses_dynamic_as_bottom
-          .sort((Message a, Message b) => a.dateTime.compareTo(b.dateTime));
+      messagesList.sort((a,b) {
+        return a.dateTime.compareTo(b.dateTime);
+      });
       for (final message in messagesList) {
         ChatMessage chatMessage = new ChatMessage(
           message: message,
