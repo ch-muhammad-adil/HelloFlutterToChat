@@ -72,14 +72,14 @@ packages:
     source: hosted
     version: "0.1.2"
   firebase_analytics:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: firebase_analytics
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.3"
+    version: "1.0.1"
   firebase_auth:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: firebase_auth
       url: "https://pub.dartlang.org"
@@ -93,19 +93,19 @@ packages:
     source: hosted
     version: "0.2.4"
   firebase_database:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: firebase_database
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.6"
+    version: "1.0.1"
   firebase_storage:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: firebase_storage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.6"
+    version: "1.0.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -131,7 +131,7 @@ packages:
     source: hosted
     version: "1.1.5"
   google_sign_in:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: google_sign_in
       url: "https://pub.dartlang.org"
@@ -166,12 +166,12 @@ packages:
     source: hosted
     version: "3.1.2"
   image_picker:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.1"
+    version: "0.4.5"
   io:
     dependency: transitive
     description:
@@ -256,6 +256,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.1"
+  path_provider:
+    dependency: "direct main"
+    description:
+      name: path_provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.1"
   plugin:
     dependency: transitive
     description:

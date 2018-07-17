@@ -32,7 +32,7 @@ class ChatMessage extends StatelessWidget {
                         style: Theme.of(context).textTheme.subhead),
                     new Container(
                       margin: const EdgeInsets.only(top: 5.0),
-                      child: (message.mediaFileUrl != null && !message.mediaFileUrl.isEmpty)
+                      child: (message.mediaFileUrl != null && message.mediaFileUrl.isNotEmpty)
                           ? new Image.network(
                               message.mediaFileUrl,
                               width: 250.0,

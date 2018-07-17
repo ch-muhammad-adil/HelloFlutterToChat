@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:hello_flutter/screens/chat_screen/ChatScreen.dart';
-import 'package:hello_flutter/screens/splash_screen/LoginScreen.dart';
+import 'package:hello_flutter/screens/splash_screen/SplashScreen.dart';
 
 void main() => runApp(new MyApp());
 
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: defaultTargetPlatform == TargetPlatform.iOS
           ? kIOSTheme
           : kDefaultTheme,
-      home: new LoginScreen(),
+      home: new SplashScreen(),
     );
   }
 }
